@@ -27,27 +27,17 @@ bot = xb.Bot.initialize("jabber_id@examp.le", "password",
 				"send_to@examp.le", monitor, reply, freq=60)
  ```
 
- #### example 2 (only sending messages)
+#### example 2 (only sending messages)
 
  ```python
- import xmppBot.Messenger as xb
+#send one message (for looping add freq param)
+bot = xb.Bot.sendMessage("jabber_id@examp.le", "password",
+ 						"send_to@examp.le", monitor)
+```
 
- def monitor():
- 	return "Example messange"
-
- #send one message (for looping add freq param)
- bot = xb.Bot.sendMessage("jabber_id@examp.le", "password",
- 				"send_to@examp.le", monitor)
-  ```
-
-	#### example 3 (only receiving messages)
+#### example 3 (only receiving messages)
 
   ```python
-  import xmppBot.Messenger as xb
-
-	def reply(msg):
-		return "You send {}".format(msg)
-
   bot = xb.Bot.receiveMessage("jabber_id@examp.le", "password", reply)
    ```
 
@@ -58,3 +48,20 @@ bot = xb.Bot.initialize("jabber_id@examp.le", "password",
 `xmppBot -j <Jabber ID> -p <password> -t <recipient> -m <message>`
 
 ---
+
+## Encryption
+
+### GPG (in progress...)
+
+```python
+bot = xb.Bot.initialize("jabber_id@examp.le", "password",
+				"send_to@examp.le", monitor, reply, freq=60, wait=True)
+#temporarily doesn't support signing and receiving encrypted messages TODO!
+bot.enableGPG("UID", "gnupghome_dir")
+
+bot.run(wait=False)
+```
+
+### OMEMO
+
+TODO!

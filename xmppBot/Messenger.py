@@ -5,6 +5,7 @@ import sys
 import logging
 import getpass
 import time 
+from xmppBot.gpg_holder import Gpg
 from optparse import OptionParser
 
 import sleekxmpp
@@ -16,92 +17,105 @@ else:
 	raw_input = input
 
 class Bot(sleekxmpp.ClientXMPP):
-	def __init__(self, jid, password, recipient, msg_function, reply_function, freq=120, msg_t=True, rpl_t=True):
+	def __init__(self, jid, password, recipient, msg_function, reply_function, freq=120, msg_t=True, rpl_t=True, wait=False):
+		self.j = jid
+		self.p = password
 		self.recipient = recipient
 		self.msg_function = msg_function
 		self.reply_function = reply_function
 		self.msg_t = msg_t
 		self.rpl_t = rpl_t
 		self.mm = []
+		self.gpg_encryption = False
 		self.ntime = freq #seconds
-		sleekxmpp.ClientXMPP.__init__(self, jid, password)
-		self.add_event_handler("session_start", self.start)
-		if rpl_t:
-			self.add_event_handler("message", self.message)
-
+		
+		self.run(wait)
+			
+	def run(self, wait):
+		if not wait:
+			sleekxmpp.ClientXMPP.__init__(self, self.j, self.p)
+			self.add_event_handler("session_start", self.start)
+			if self.rpl_t:
+				self.add_event_handler("message", self.message)	
+			self.register_plugin('xep_0030') # Service Discovery
+			self.register_plugin('xep_0004') # Data Forms
+			self.register_plugin('xep_0060') # PubSub
+			self.register_plugin('xep_0199') # XMPP Ping
+			if self.connect():
+				self.process(block=True)
+				print("Done")
+			else:
+				print("Unable to connect.")
+				
+			
 	@classmethod        
 	def receiveMessage(cls, jid, password, reply):
 		logging.basicConfig(level=logging.ERROR,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 		instance = cls(jid, password, None, None, reply, freq=-1, msg_t=False, rpl_t=True)
-		instance.register_plugin('xep_0030') # Service Discovery
-		instance.register_plugin('xep_0004') # Data Forms
-		instance.register_plugin('xep_0060') # PubSub
-		instance.register_plugin('xep_0199') # XMPP Ping
-		if instance.connect():
-			instance.process(block=True)
-			print("Done")
-		else:
-			print("Unable to connect.")
 		return instance 
 
 	@classmethod        
 	def sendMessage(cls, jid, password, recipient, message, freq=-1):
 		logging.basicConfig(level=logging.ERROR,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 		instance = cls(jid, password, recipient, message, None, freq, msg_t=True, rpl_t=False)
-		instance.register_plugin('xep_0030') # Service Discovery
-		instance.register_plugin('xep_0004') # Data Forms
-		instance.register_plugin('xep_0060') # PubSub
-		instance.register_plugin('xep_0199') # XMPP Ping
-		if instance.connect():
-			instance.process(block=True)
-			print("Done")
-		else:
-			print("Unable to connect.")
 		return instance    
         
 	@classmethod        
-	def initialize(cls, jid, password, recipient, message, reply, freq=120):
-		logging.basicConfig(level=logging.ERROR,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-		instance = cls(jid, password, recipient, message, reply, freq)
-		instance.register_plugin('xep_0030') # Service Discovery
-		instance.register_plugin('xep_0004') # Data Forms
-		instance.register_plugin('xep_0060') # PubSub
-		instance.register_plugin('xep_0199') # XMPP Ping
-		if instance.connect():
-			instance.process(block=True)
-			print("Done")
-		else:
-			print("Unable to connect.")
-		return instance         
+	def initialize(cls, jid, password, recipient, message, reply, freq=10,wait=False):
+		logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+		instance = cls(jid, password, recipient, message, reply, freq=freq, msg_t=True, rpl_t=True, wait=wait)
+		return instance
+
+         
             
 	def start(self, event):
 		self.send_presence()
 		self.get_roster()
 		if self.msg_t:
+			print("start() --msg_t->True")
 			self._start_thread("chat_send", self.monitor)
           
 	def monitor(self):
 		while True:
 			time.sleep(1)
 			if int(time.time())%self.ntime == 0 and self.ntime > 0:
-				self.send_message(mto=self.recipient, mbody=self.msg_function(), mtype='chat')
+				print("Sending...{}".format(self.MSG()))
+				self.send_message(mto=self.recipient, mbody=self.MSG(), mtype='chat')
 			elif self.ntime < 0:
-				self.send_message(mto=self.recipient, mbody=self.msg_function(), mtype='chat')
+				self.send_message(mto=self.recipient, mbody=self.MSG(), mtype='chat')
 				self.disconnect(wait=True)
 				break
 
  
 	def message(self, msg):
 		if msg['type'] in ('chat', 'normal'):
-			msg.reply(self.reply_function(msg["body"])).send()
+			msg.reply(self.RPL(msg["body"])).send()
 			print(str(msg["body"]))
 			self.mm = msg
-            
-def monitor():
-	return "func_moni test {}".format(time.time())
 	
-def reply(msg):
-	return "Yout send {}".format(msg)
+	def enableGPG(self, uid, gpghome=''):
+		self.gpg = Gpg(gpghome)
+		self.uid = uid
+		self.gpg_encryption = True
+		return None
+
+	def GPG(func):
+		def wrap(self, *args, **kwargs):
+			if self.gpg_encryption:
+				message = self.gpg.encrypt(func(self, *args, **kwargs), uids=self.uid)
+			else:
+				message = func(self, *args, **kwargs)
+			return message
+		return wrap
+	
+	@GPG
+	def MSG(self):
+		return self.msg_function()
+		
+	@GPG
+	def RPL(self, msg):
+		return self.reply_function(msg)
+            
 
 def main():
 	optp = OptionParser()

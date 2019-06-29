@@ -2,5 +2,8 @@ venv/
 *.pyc
 *.tmp
 *__pycache__*
-
-
+gpg_holder.egg-info/
+dist/
+build/
+xmppBot.egg-info/
+test.py

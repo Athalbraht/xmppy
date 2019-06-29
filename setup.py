@@ -4,9 +4,9 @@ from setuptools import setup
 import xmppBot
 
 #with open('requirements.txt','r') as req:
-#    deps = req.read().splitlines()
+ #   deps = req.read().splitlines()
 
-deps = ["sleekxmpp"]
+deps = ["sleekxmpp", "pythongnupg"]
 
 setup(
         name = "xmppBot",
