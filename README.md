@@ -26,6 +26,7 @@ def reply(msg):
 bot = xb.Bot.initialize("jabber_id@examp.le", "password",
 				"send_to@examp.le", monitor, reply, freq=60)
  ```
+![example 1](examples/obscura1561838699874.jpg)
 
 #### example 2 (only sending messages)
 
