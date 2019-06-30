@@ -9,7 +9,9 @@
 
 ![status](https://img.shields.io/badge/build-passing-green.svg?style=flat&logo=Linux) ![status](https://img.shields.io/badge/build-falling-red.svg?style=flat&logo=Windows)
 
-Python module for receiving and sending massage using XMPP protocol.
+Python module for receiving and sending message using XMPP protocol.
+
+Repos: [GitHub](https://github.com/aszadzinski/xmppBot.git) [GitLab](https://gitlab.com/aszadzinski/xmppbot)
 
 ---
 
