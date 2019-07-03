@@ -6,7 +6,7 @@ import logging
 import getpass
 import time
 import configparser as config
-from xmppBot.gpg_holder import Gpg
+from xmppy.gpg_holder import Gpg
 from optparse import OptionParser
 
 import sleekxmpp
@@ -18,7 +18,7 @@ else:
     raw_input = input
 
 
-class Bot(sleekxmpp.ClientXMPP):
+class Client(sleekxmpp.ClientXMPP):
     def __init__(self, jid, password, recipient, msg_function, reply_function, freq=120, msg_t=True, rpl_t=True, wait=False):
         if jid == "file":
             tmp = config.ConfigParser()
@@ -179,5 +179,5 @@ def main():
         opts.jid = raw_input("Username: ")
     if opts.password is None:
         opts.password = getpass.getpass("Password: ")
-    xmpp = Bot.sendMessage(opts.jid, opts.password,
+    xmpp = Client.sendMessage(opts.jid, opts.password,
                            opts.to, lambda: opts.message)

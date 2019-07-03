@@ -1,17 +1,17 @@
-# XmppBot
+# xmppy
 
 
 
 
-![tag](https://img.shields.io/github/tag-date/aszadzinski/xmppBot.svg)
-![commit](https://img.shields.io/github/last-commit/aszadzinski/xmppBot.svg)
-![license](https://img.shields.io/github/license/aszadzinski/xmppBot.svg)
+![tag](https://img.shields.io/github/tag-date/aszadzinski/xmppy.svg)
+![commit](https://img.shields.io/github/last-commit/aszadzinski/xmppy.svg)
+![license](https://img.shields.io/github/license/aszadzinski/xmppy.svg)
 
 ![status](https://img.shields.io/badge/build-passing-green.svg?style=flat&logo=Linux) ![status](https://img.shields.io/badge/build-falling-red.svg?style=flat&logo=Windows)
 
 Python module for receiving and sending message using XMPP protocol.
 
-Repos: [GitHub](https://github.com/aszadzinski/xmppBot.git) [GitLab](https://gitlab.com/aszadzinski/xmppbot)
+Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppy)
 
 ---
 
@@ -46,11 +46,11 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppBot.git) [GitLab](https://git
 
 ### Using pip (TODO)
 
-`pip install xmppBot`
+`pip install xmppy`
 
 ### AUR (TODO)
 
-`makepkg xmppBot`
+`makepkg xmppy`
 
 ## Usage
 
@@ -61,7 +61,7 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppBot.git) [GitLab](https://git
 (using classmethod)
 
 ```python
-import xmppBot.Messenger as xb
+import xmppy.Messenger as xb
 import subprocess as sp
 
 def monitor():
@@ -71,7 +71,7 @@ def reply(msg):
 	return sp.check_output(msg, shell=True).decode()
 
 #send monitor() every 60 seconds and keep receiving reply()
-bot = xb.Bot.initialize("jabber_id@examp.le", "password",
+Client = xb.Client.initialize("jabber_id@examp.le", "password",
 				"send_to@examp.le", monitor, reply, freq=60)
  ```
 ![example 1](examples/pics/obscura1561838699874.jpg)
@@ -82,7 +82,7 @@ bot = xb.Bot.initialize("jabber_id@examp.le", "password",
 
  ```python
 #send one message (for looping add freq param)
-bot = xb.Bot.sendMessage("jabber_id@examp.le", "password",
+Client = xb.Client.sendMessage("jabber_id@examp.le", "password",
  						"send_to@examp.le", monitor)
 ```
 
@@ -91,14 +91,14 @@ bot = xb.Bot.sendMessage("jabber_id@examp.le", "password",
 (only receiving messages)
 
   ```python
-  bot = xb.Bot.receiveMessage("jabber_id@examp.le", "password", reply)
+  Client = xb.Client.receiveMessage("jabber_id@examp.le", "password", reply)
    ```
 
 ---
 
 ### Data input
 
-Instead od entering data as parameters `xmppBot.Bot("jid","pass","recipient"...)` you can use .ini file:
+Instead od entering data as parameters `xmppy.Client("jid","pass","recipient"...)` you can use .ini file:
 
 ```bash
 #example.ini
@@ -106,16 +106,16 @@ Instead od entering data as parameters `xmppBot.Bot("jid","pass","recipient"...)
 jid = jid@examp.le
 password = qwerty123
 # recipient input is optional.
-# In order to use entry below you should mark recipient as None in Bot constructor
-# i.e. xmppBot.Bot("file", "example.ini", None, ...) Otherwise, this input will be ignored.
+# In order to use entry below you should mark recipient as None in Client constructor
+# i.e. xmppy.Client("file", "example.ini", None, ...) Otherwise, this input will be ignored.
 recipient = rece@examp.le
 ```
 
-and change function call from `.Bot("jid@examp.le", "password", "recipient@examp.le", ...)`  to `.Bot("file", "<.ini file>", <None or recipient@examp.le>, ...)`. Feauture works with all calls (example 1,2,3). 
+and change function call from `.Client("jid@examp.le", "password", "recipient@examp.le", ...)`  to `.Client("file", "<.ini file>", <None or recipient@examp.le>, ...)`. Feauture works with all calls (example 1,2,3).
 
 ### Console script
 
-`xmppBot -j <Jabber ID> -p <password> -t <recipient> -m <message>`
+`xmppy -j <Jabber ID> -p <password> -t <recipient> -m <message>`
 
 ---
 
@@ -126,12 +126,12 @@ and change function call from `.Bot("jid@examp.le", "password", "recipient@examp
 (in progress...)
 
 ```python
-bot = xb.Bot.initialize("jabber_id@examp.le", "password",
+Client = xb.Client.initialize("jabber_id@examp.le", "password",
 				"send_to@examp.le", monitor, reply, freq=60, wait=True)
 #temporarily doesn't support signing and receiving encrypted messages TODO!
-bot.enableGPG("UID", "gnupghome_dir")
+Client.enableGPG("UID", "gnupghome_dir")
 
-bot.run(wait=False)
+Client.run(wait=False)
 ```
 
 #### OMEMO

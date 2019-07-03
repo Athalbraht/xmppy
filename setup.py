@@ -1,10 +1,10 @@
 from setuptools import setup
-import xmppBot
+import xmppy
 
 deps = ["sleekxmpp", "pythongnupg"]
 
 setup(
-    name="xmppBot",
+    name="xmppy",
     description="Python module for receiving and sending massage using XMPP protocol",
     version="v0.1",
     author="Albert Szadziński",
@@ -12,8 +12,8 @@ setup(
     license="MIT",
     requires=deps,
     install_requires=deps,
-    packages=['xmppBot'],
+    packages=['xmppy'],
     entry_points={
-        'console_scripts': ['xmppBot = xmppBot.Messenger:main']
+        'console_scripts': ['xmppy = xmppy.Messenger:main']
     }
 )
