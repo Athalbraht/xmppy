@@ -1,7 +1,7 @@
 from setuptools import setup
 import xmppy
 
-deps = ["sleekxmpp", "pythongnupg"]
+deps = ["sleekxmpp", "python-gnupg"]
 
 setup(
     name="xmppy",
@@ -10,7 +10,6 @@ setup(
     author="Albert Szadziński",
     author_email="albert.szadzinski@pm.me",
     license="MIT",
-    requires=deps,
     install_requires=deps,
     packages=['xmppy'],
     entry_points={
