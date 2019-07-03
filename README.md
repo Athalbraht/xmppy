@@ -11,7 +11,7 @@
 
 Python module for receiving and sending message using XMPP protocol.
 
-Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppy)
+Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppBot)
 
 ---
 
@@ -19,7 +19,7 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitla
 
 - [Installation](#Installation)
 - [Usage](#Usage)
-	- [Examples](#Module)
+	- [Sending and receiving messages](Sending-and-receiving-messages)
 		- [Example 1](#example-1)
 		- [Example 2](#example-2)
 		- [Example 3](#example-3)
@@ -44,9 +44,13 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitla
 - sleekxmpp
 - python-gnupg
 
-### Using pip (TODO)
+### Using pip
 
 `pip install xmppy`
+
+or using .whl from [releases](https://github.com/aszadzinski/xmppy/releases):
+
+`pip install xmppy-XXX.whl`
 
 ### AUR (TODO)
 
@@ -54,7 +58,7 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitla
 
 ## Usage
 
-### Module
+### Sending and receiving messages
 
 #### example 1
 
@@ -111,7 +115,7 @@ password = qwerty123
 recipient = rece@examp.le
 ```
 
-and change function call from `.Client("jid@examp.le", "password", "recipient@examp.le", ...)`  to `.Client("file", "<.ini file>", <None or recipient@examp.le>, ...)`. Feauture works with all calls (example 1,2,3).
+and change function call from `.Client("jid@examp.le", "password", "recipient@examp.le", ...)`  to `.Client("file", "<.ini file>", <None or recipient@examp.le>, ...)`. Feature works with all calls from examples (1,2,3).
 
 ### Console script
 
