@@ -7,3 +7,4 @@ dist/
 build/
 xmppBot.egg-info/
 test.py
+test.ini

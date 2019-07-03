@@ -19,10 +19,11 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppBot.git) [GitLab](https://git
 
 - [Installation](#Installation)
 - [Usage](#Usage)
-	- [Module](#Module)
+	- [Examples](#Module)
 		- [Example 1](#example-1)
 		- [Example 2](#example-2)
 		- [Example 3](#example-3)
+	- [Data input](#Data-input)
 	- [Console script](#Console-script)
 	- [Encryption](#Encryption)
 		- [GPG](#GPG)
@@ -73,7 +74,7 @@ def reply(msg):
 bot = xb.Bot.initialize("jabber_id@examp.le", "password",
 				"send_to@examp.le", monitor, reply, freq=60)
  ```
-![example 1](examples/obscura1561838699874.jpg)
+![example 1](examples/pics/obscura1561838699874.jpg)
 
 #### example 2
 
@@ -95,7 +96,24 @@ bot = xb.Bot.sendMessage("jabber_id@examp.le", "password",
 
 ---
 
- ### Console script
+### Data input
+
+Instead od entering data as parameters `xmppBot.Bot("jid","pass","recipient"...)` you can use .ini file:
+
+```bash
+#example.ini
+[configfile]
+jid = jid@examp.le
+password = qwerty123
+# recipient input is optional.
+# In order to use entry below you should mark recipient as None in Bot constructor
+# i.e. xmppBot.Bot("file", "example.ini", None, ...) Otherwise, this input will be ignored.
+recipient = rece@examp.le
+```
+
+and change function call from `.Bot("jid@examp.le", "password", "recipient@examp.le", ...)`  to `.Bot("file", "<.ini file>", <None or recipient@examp.le>, ...)`. Feauture works with all calls (example 1,2,3). 
+
+### Console script
 
 `xmppBot -j <Jabber ID> -p <password> -t <recipient> -m <message>`
 

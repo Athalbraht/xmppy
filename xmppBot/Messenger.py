@@ -5,6 +5,7 @@ import sys
 import logging
 import getpass
 import time
+import configparser as config
 from xmppBot.gpg_holder import Gpg
 from optparse import OptionParser
 
@@ -19,9 +20,32 @@ else:
 
 class Bot(sleekxmpp.ClientXMPP):
     def __init__(self, jid, password, recipient, msg_function, reply_function, freq=120, msg_t=True, rpl_t=True, wait=False):
-        self.j = jid
-        self.p = password
-        self.recipient = recipient
+        if jid == "file":
+            tmp = config.ConfigParser()
+            check = tmp.read(password)
+            if check == []:
+                print("empty {}".format(password))
+                exit()
+            data = tmp["configfile"]
+            if "jid" in data.keys() and "password" in data.keys():
+                self.j = data["jid"]
+                self.p = data["password"]
+            else:
+                print("Missing data in {}".format(password))
+                exit()
+            if recipient is None and msg_t:
+                if "recipient" in data.keys():
+                    self.recipient = data["recipient"]
+                else:
+                    print("Missing recipient in {}".format(password))
+                    exit()
+            else:
+                self.recipient = recipient
+
+        else:
+            self.j = jid
+            self.p = password
+            self.recipient = recipient
         self.msg_function = msg_function
         self.reply_function = reply_function
         self.msg_t = msg_t
