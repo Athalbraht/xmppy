@@ -5,6 +5,7 @@ import sys
 import logging
 import getpass
 import time
+import ssl
 import configparser as config
 from xmppy.gpg_holder import Gpg
 from optparse import OptionParser
@@ -66,6 +67,7 @@ class Client(sleekxmpp.ClientXMPP):
             self.register_plugin('xep_0004')  # Data Forms
             self.register_plugin('xep_0060')  # PubSub
             self.register_plugin('xep_0199')  # XMPP Ping
+            self.ssl_version = ssl.PROTOCOL_TLSv1_2
             if self.connect():
                 self.process(block=True)
                 print("Done")

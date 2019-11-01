@@ -1,14 +1,14 @@
 from setuptools import setup
 import xmppy
 
-deps = ["sleekxmpp", "python-gnupg"]
+deps = ["sleekxmpp", "python-gnupg", "dnspython"]
 
 setup(
     name="xmppy",
     description="Python module for receiving and sending massage using XMPP protocol",
-    version="v0.1",
+    version="v0.11",
     author="Albert Szadziński",
-    author_email="albert.szadzinski@pm.me",
+    author_email="albert.szadzinski@smcebi.edu.pl",
     license="MIT",
     install_requires=deps,
     packages=['xmppy'],
