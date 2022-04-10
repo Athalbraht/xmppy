@@ -11,6 +11,8 @@
 
 Python module for receiving and sending message using XMPP protocol.
 
+**Known issues for python3.10**
+
 Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppBot)
 
 ---
