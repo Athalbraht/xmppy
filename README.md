@@ -9,9 +9,11 @@
 
 ![status](https://img.shields.io/badge/build-passing-green.svg?style=flat&logo=Linux) ![status](https://img.shields.io/badge/build-falling-red.svg?style=flat&logo=Windows)
 
+**The repository is no longer being developed**
+
 Python module for receiving and sending message using XMPP protocol.
 
-**Known issues for python3.10**
+**Known issues for python +3.10**
 
 Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppBot)
 
