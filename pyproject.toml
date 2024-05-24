@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "xmppy"
+version = "v0.2"
+description = "XMPP module for Python"
+authors = ["aszadzinski <contact.22cpu@aleeas.com>"]
+license = "MIT"
+readme = "README.md"
+
+
+
+[tool.poetry.dependencies]
+python = ">=3.8,<3.10"
+sleekxmpp = "^1.3.3"
+dnspython = "^2.6.1"
+python-gnupg = "^0.5.2"
+
+[tool.poetry.scripts]
+xmppy = 'xmppy.Messenger:main'
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

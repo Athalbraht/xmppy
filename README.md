@@ -13,6 +13,8 @@
 
 Python module for receiving and sending message using XMPP protocol.
 
+Requires python >=3.8
+
 **Known issues for python +3.10**
 
 Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppBot)
@@ -41,24 +43,24 @@ Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitla
 
 ### From source
 
-``` python3 setup.py install```
-
-**Depedencies:**
-
-- sleekxmpp
-- python-gnupg
+```console
+# using poetry
+user@host:~$ poetry install 
+# using pip
+user@host:~$ pip install .
+```
 
 ### Using pip
 
-`pip install xmppy`
-
-or using .whl from [releases](https://github.com/aszadzinski/xmppy/releases):
-
-`pip install xmppy-XXX.whl`
+```console
+user@host:~$ pip install xmppy
+```
 
 ### AUR (TODO)
 
-`makepkg xmppy`
+```console
+user@host:~$ makepkg xmppy
+```
 
 ## Usage
 
@@ -123,7 +125,9 @@ and change function call from `.Client("jid@examp.le", "password", "recipient@ex
 
 ### Console script
 
-`xmppy -j <Jabber ID> -p <password> -t <recipient> -m <message>`
+```console
+user@host:~$ xmppy -j <Jabber ID> -p <password> -t <recipient> -m <message>
+```
 
 ---
 
