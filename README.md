@@ -13,9 +13,9 @@
 
 Python module for receiving and sending message using XMPP protocol.
 
-Requires python >=3.8
+**Requires python >=3.8, <3.10**
 
-**Known issues for python +3.10**
+**Attention**: Module DO NOT provide any layers of encryption. You use it at your own risk.
 
 Repos: [GitHub](https://github.com/aszadzinski/xmppy.git) [GitLab](https://gitlab.com/aszadzinski/xmppBot)
 
